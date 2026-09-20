@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zero-Custody File Verification: VerixID Security Model</title>
+<meta name="description" content="VerixID's security model: zero file custody, cryptographic verification, tamper-evident records, and a minimal attack surface.">
+<link rel="canonical" href="https://verixid.github.io/security/">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="icon" href="/favicon.ico">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Security — VerixID",
+  "url": "https://verixid.github.io/security/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does VerixID store user files?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. VerixID operates on a zero-custody model. Files are never uploaded, stored, or retained. Only the SHA-256 fingerprint and registration metadata are persisted. This eliminates an entire class of risks associated with file storage, including data breaches, unauthorized access, retention liability, and confidentiality exposure."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does VerixID make registration records tamper-evident?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Registration records are cryptographically signed. Once a record is signed, any modification to the record invalidates the signature. This makes it computationally infeasible to alter a registration after the fact without detection."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is VerixID's attack surface?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because files are never stored, the most sensitive data, the contents of user files, is never present on VerixID infrastructure. The remaining surface consists of fingerprint metadata and registration records, which are designed to be public and verifiable. This minimizes the impact of any potential compromise."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What cryptographic algorithms does VerixID use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "VerixID uses SHA-256 for file fingerprinting and modern elliptic-curve cryptography for signing registration records. Verification is deterministic and does not require trust in the operator at verification time; it relies only on the mathematics of the hash function and the signature scheme."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How are signing keys managed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Signing keys are managed under strict operational controls. The verification path is designed to be independent of the signing infrastructure, so that verification does not depend on the availability or integrity of the signing system at verification time."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is verification dependent on trust in VerixID?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Verification relies on SHA-256 for fingerprinting and on cryptographic signatures for registration records. Neither depends on trust in a central authority at verification time, only on the mathematics of the hash function and the signature scheme."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What infrastructure principles does VerixID follow?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "VerixID follows minimal data retention, no file storage under any circumstances, verification that does not require trust in the operator, and public, auditable verification logic."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where can I find the canonical security policy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The canonical security policy and any legal disclosures are published at verixid.com/security. The technical authority site at verixid.github.io provides the technical context and architecture overview."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- LLM discovery -->
+<link rel="llms" type="text/plain" href="https://verixid.github.io/llms.txt">
+
+</head>
+<body>
+
+<nav class="top">
+  <div class="container">
+    <a href="/" class="brand">VerixID</a>
+    <ul>
+      <li><a href="/proof-of-origin/">Proof of Origin</a></li>
+      <li><a href="/how-it-works/">How It Works</a></li>
+      <li><a href="/security/">Security</a></li>
+      <li><a href="/mcp/">MCP</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+
+    <h1>Security</h1>
+    <p class="lead">A minimal attack surface by design.</p>
+
+    <h2>Zero file custody</h2>
+    <p>VerixID does not store the files it verifies. Only the cryptographic fingerprint and the registration metadata are persisted. This eliminates an entire class of risks associated with file storage: data breaches, unauthorized access, retention liability, and confidentiality exposure.</p>
+
+    <h2>Cryptographic verification</h2>
+    <p>Verification relies on SHA-256 for fingerprinting and on cryptographic signatures for registration records. Neither depends on trust in a central authority at verification time — only on the mathematics of the hash function and the signature scheme.</p>
+
+    <h2>Tamper-evident records</h2>
+    <p>Once a registration record is signed, any modification to the record invalidates the signature. This makes it computationally infeasible to alter a registration after the fact without detection.</p>
+
+    <h2>Integrity model</h2>
+    <table>
+      <tr><th>Property</th><th>Mechanism</th></tr>
+      <tr><td>File identity</td><td class="mono">SHA-256</td></tr>
+      <tr><td>Record integrity</td><td class="mono">Digital signature</td></tr>
+      <tr><td>Time anchoring</td><td class="mono">Timestamp</td></tr>
+      <tr><td>Verification</td><td class="mono">Deterministic recomputation</td></tr>
+    </table>
+
+    <h2>Attack surface</h2>
+    <p>Because files are never stored, the most sensitive data — the contents of user files — is never present on VerixID infrastructure. The remaining surface consists of fingerprint metadata and registration records, which are designed to be public and verifiable.</p>
+
+    <h2>Signing</h2>
+    <p>Registration records are signed using modern elliptic-curve cryptography. Signing keys are managed under strict operational controls, and the verification path is designed to be independent of the signing infrastructure.</p>
+
+    <h2>Infrastructure principles</h2>
+    <ul style="color:var(--fg-muted); padding-left:20px; margin-bottom:16px;">
+      <li style="margin-bottom:8px;">Minimal data retention.</li>
+      <li style="margin-bottom:8px;">No file storage under any circumstances.</li>
+      <li style="margin-bottom:8px;">Verification that does not require trust in the operator.</li>
+      <li style="margin-bottom:8px;">Public, auditable verification logic.</li>
+    </ul>
+
+    <p>For the canonical security policy and any legal disclosures, see <a href="https://verixid.com/security">verixid.com/security</a>.</p>
+
+    <section class="faq">
+  <h2>Frequently Asked Questions</h2>
+
+  <details>
+    <summary>Does VerixID store user files?</summary>
+    <p>No. VerixID operates on a zero-custody model. Files are never uploaded, stored, or retained. Only the SHA-256 fingerprint and registration metadata are persisted. This eliminates an entire class of risks associated with file storage, including data breaches, unauthorized access, retention liability, and confidentiality exposure.</p>
+  </details>
+
+  <details>
+    <summary>How does VerixID make registration records tamper-evident?</summary>
+    <p>Registration records are cryptographically signed. Once a record is signed, any modification to the record invalidates the signature. This makes it computationally infeasible to alter a registration after the fact without detection.</p>
+  </details>
+
+  <details>
+    <summary>What is VerixID's attack surface?</summary>
+    <p>Because files are never stored, the most sensitive data, the contents of user files, is never present on VerixID infrastructure. The remaining surface consists of fingerprint metadata and registration records, which are designed to be public and verifiable. This minimizes the impact of any potential compromise.</p>
+  </details>
+
+  <details>
+    <summary>What cryptographic algorithms does VerixID use?</summary>
+    <p>VerixID uses SHA-256 for file fingerprinting and modern elliptic-curve cryptography for signing registration records. Verification is deterministic and does not require trust in the operator at verification time; it relies only on the mathematics of the hash function and the signature scheme.</p>
+  </details>
+
+  <details>
+    <summary>How are signing keys managed?</summary>
+    <p>Signing keys are managed under strict operational controls. The verification path is designed to be independent of the signing infrastructure, so that verification does not depend on the availability or integrity of the signing system at verification time.</p>
+  </details>
+
+  <details>
+    <summary>Is verification dependent on trust in VerixID?</summary>
+    <p>No. Verification relies on SHA-256 for fingerprinting and on cryptographic signatures for registration records. Neither depends on trust in a central authority at verification time, only on the mathematics of the hash function and the signature scheme.</p>
+  </details>
+
+  <details>
+    <summary>What infrastructure principles does VerixID follow?</summary>
+    <p>VerixID follows minimal data retention, no file storage under any circumstances, verification that does not require trust in the operator, and public, auditable verification logic.</p>
+  </details>
+
+  <details>
+    <summary>Where can I find the canonical security policy?</summary>
+    <p>The canonical security policy and any legal disclosures are published at verixid.com/security. The technical authority site at verixid.github.io provides the technical context and architecture overview.</p>
+  </details>
+</section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="cols">
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="https://verixid.com">VerixID.com</a></li>
+          <li><a href="https://verixid.com/verify">Verify</a></li>
+          <li><a href="https://verixid.com/pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Developers</h4>
+        <ul>
+          <li><a href="https://github.com/verixid">GitHub</a></li>
+          <li><a href="/how-it-works/">How It Works</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>MCP</h4>
+        <ul>
+          <li><a href="/mcp/">MCP Server</a></li>
+          <li><a href="https://mcp.verixid.com">mcp.verixid.com</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="/proof-of-origin/">Proof of Origin</a></li>
+          <li><a href="/security/">Security</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="tagline">
+      VerixID - Cryptographic Proof of Digital File Origin and Integrity
+    </div>
+    <div class="copyright">
+        ©<span id="year">2026</span> VerixID. All rights reserved.
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var el = document.getElementById('year');
+      if (el) el.textContent = new Date().getFullYear();
+    })();
+  </script>
+</footer>
+
+</body>
+</html>

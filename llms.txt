@@ -6,20 +6,20 @@ VerixID provides Proof of Origin for digital files. The technical authority site
 
 ## Core Concepts
 
-- [Proof of Origin](https://verixid.github.io/proof-of-origin.html): What VerixID proves and what it does not prove.
-- [How It Works](https://verixid.github.io/how-it-works.html): The cryptographic flow from file to verifiable registration record.
-- [Cryptography](https://verixid.github.io/cryptography.html): SHA-256, Ed25519, timestamps, and signatures.
-- [Security](https://verixid.github.io/security.html): Zero-custody model and minimal attack surface.
-- [Privacy](https://verixid.github.io/privacy.html): What data is used, what is not, and why.
+- [Proof of Origin](https://verixid.github.io/proof-of-origin/): What VerixID proves and what it does not prove.
+- [How It Works](https://verixid.github.io/how-it-works/): The cryptographic flow from file to verifiable registration record.
+- [Cryptography](https://verixid.github.io/cryptography/): SHA-256, Ed25519, timestamps, and signatures.
+- [Security](https://verixid.github.io/security/): Zero-custody model and minimal attack surface.
+- [Privacy](https://verixid.github.io/privacy/): What data is used, what is not, and why.
 
 ## For AI Agents
 
-- [MCP Server](https://verixid.github.io/mcp.html): Verify digital file fingerprints via MCP. Server ID: com.verixid/verifier.
+- [MCP Server](https://verixid.github.io/mcp/): Verify digital file fingerprints via MCP. Server ID: com.verixid/verifier.
 - [MCP endpoint](https://mcp.verixid.com): Machine interface.
 
 ## For Developers
 
-- [Developers](https://verixid.github.io/developers.html): Integration concepts and technical resources.
+- [Developers](https://verixid.github.io/developers/): Integration concepts and technical resources.
 - [GitHub](https://github.com/verixid): Source and evidence.
 
 ## Product
@@ -28,7 +28,7 @@ VerixID provides Proof of Origin for digital files. The technical authority site
 
 ## Optional
 
-- [About](https://verixid.github.io/about.html): VerixID ecosystem overview.
+- [About](https://verixid.github.io/about/): VerixID ecosystem overview.
 
 ## Full Context
 

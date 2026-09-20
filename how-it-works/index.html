@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Digital File Verification Works: SHA-256, Timestamps, Signatures</title>
+<meta name="description" content="How VerixID uses SHA-256 fingerprints, timestamps, and cryptographic signatures to establish digital file provenance without storing the file.">
+<link rel="canonical" href="https://verixid.github.io/how-it-works/">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="icon" href="/favicon.ico">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "How VerixID Works",
+  "url": "https://verixid.github.io/how-it-works/",
+  "author": { "@type": "Organization", "name": "VerixID" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does VerixID verify a digital file?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "VerixID computes a SHA-256 fingerprint of the file, binds it to a timestamp, and signs the resulting registration record. Verification later consists of recomputing the fingerprint from the original file, looking it up in VerixID, and confirming that the registration record is valid and signed. The file itself is never uploaded."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does VerixID require uploading the file?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Only the SHA-256 fingerprint is submitted to VerixID. The file does not need to be uploaded for fingerprinting or for verification. This zero-custody design eliminates privacy risks, storage obligations, and a large portion of the attack surface."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What cryptographic primitives does VerixID use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "VerixID uses SHA-256 for file fingerprinting, cryptographic signatures for tamper-evident registration records, timestamps for time anchoring, and deterministic recomputation for verification. SHA-256 produces a 64-character hexadecimal fingerprint that uniquely represents the file's content."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens during VerixID registration?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "During registration, the fingerprint is submitted to VerixID along with a timestamp. The system creates a registration record binding the fingerprint to that moment in time, and cryptographically signs the record so that any later modification would invalidate the signature."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does verification take?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Verification is deterministic and does not depend on trust in the operator. Once the fingerprint is recomputed from the original file and looked up, the registration record can be checked quickly. The time required depends primarily on the size of the file for hashing, not on any server-side processing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can the same file be registered twice?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The same file content produces the same SHA-256 fingerprint, so the first registration establishes the earliest point in time at which that fingerprint is known to VerixID. Subsequent registrations of the same fingerprint do not change the original registration timestamp."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if a file is modified?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Any modification to a file changes its SHA-256 fingerprint. A modified file will not match the fingerprint associated with an existing registration, so verification will fail for that modified version. This is a property of the cryptographic hash function, not a policy choice."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the file stored anywhere during the process?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The file stays with the user. Only the fingerprint and registration metadata are stored. The zero-custody model means VerixID never has access to the file's content, and therefore cannot leak, retain, or be compelled to disclose it."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- LLM discovery -->
+<link rel="llms" type="text/plain" href="https://verixid.github.io/llms.txt">
+
+</head>
+<body>
+
+<nav class="top">
+  <div class="container">
+    <a href="/" class="brand">VerixID</a>
+    <ul>
+      <li><a href="/proof-of-origin/">Proof of Origin</a></li>
+      <li><a href="/how-it-works/">How It Works</a></li>
+      <li><a href="/security/">Security</a></li>
+      <li><a href="/mcp/">MCP</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+
+    <h1>How VerixID Works</h1>
+    <p class="lead">From a file on your device to a verifiable registration record.</p>
+
+    <h2>The flow</h2>
+
+<pre><code>Your File
+   │
+   ▼
+SHA-256
+   │
+   ▼
+Fingerprint (64 hex chars)
+   │
+   ▼
+VerixID Registration
+   │
+   ├── Timestamp
+   └── Cryptographic Signature
+   │
+   ▼
+Signed Registration Record
+   │
+   ▼
+Verification (anytime, by anyone)</code></pre>
+
+    <h2>Step by step</h2>
+
+    <h3>1. Fingerprinting</h3>
+    <p>The file is hashed locally using SHA-256. The output is a 64-character hexadecimal fingerprint that uniquely represents the file's content.</p>
+    <div class="fingerprint">
+      SHA-256<br>
+      7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069
+    </div>
+    <p>The file does not need to be uploaded for fingerprinting. Only the hash is submitted.</p>
+
+    <h3>2. Registration</h3>
+    <p>The fingerprint is submitted to VerixID along with a timestamp. The system creates a registration record binding the fingerprint to that moment in time.</p>
+
+    <h3>3. Signing</h3>
+    <p>The registration record is cryptographically signed. This makes the record tamper-evident: any modification to the record after signing would invalidate the signature.</p>
+
+    <h3>4. Verification</h3>
+    <p>At any later time, anyone can:</p>
+    <ul style="color:var(--fg-muted); padding-left:20px; margin-bottom:16px;">
+      <li style="margin-bottom:8px;">Recompute the SHA-256 fingerprint of the original file.</li>
+      <li style="margin-bottom:8px;">Look up the fingerprint in VerixID.</li>
+      <li style="margin-bottom:8px;">Confirm that the registration record is valid and signed.</li>
+      <li style="margin-bottom:8px;">Confirm the timestamp associated with the registration.</li>
+    </ul>
+
+    <div class="callout">
+      The file stays with you. The proof stays verifiable.
+    </div>
+
+    <h2>Why no file upload is required</h2>
+    <p>A SHA-256 fingerprint is sufficient to identify file content for verification purposes. Uploading the file itself would introduce:</p>
+    <ul style="color:var(--fg-muted); padding-left:20px; margin-bottom:16px;">
+      <li style="margin-bottom:8px;">Unnecessary custody of user data.</li>
+      <li style="margin-bottom:8px;">Privacy and confidentiality risks.</li>
+      <li style="margin-bottom:8px;">Storage and retention obligations.</li>
+      <li style="margin-bottom:8px;">A larger attack surface.</li>
+    </ul>
+    <p>By design, VerixID avoids all of these. Only the fingerprint and registration metadata are stored.</p>
+
+    <section class="faq">
+  <h2>Frequently Asked Questions</h2>
+
+  <details>
+    <summary>How does VerixID verify a digital file?</summary>
+    <p>VerixID computes a SHA-256 fingerprint of the file, binds it to a timestamp, and signs the resulting registration record. Verification later consists of recomputing the fingerprint from the original file, looking it up in VerixID, and confirming that the registration record is valid and signed. The file itself is never uploaded.</p>
+  </details>
+
+  <details>
+    <summary>Does VerixID require uploading the file?</summary>
+    <p>No. Only the SHA-256 fingerprint is submitted to VerixID. The file does not need to be uploaded for fingerprinting or for verification. This zero-custody design eliminates privacy risks, storage obligations, and a large portion of the attack surface.</p>
+  </details>
+
+  <details>
+    <summary>What cryptographic primitives does VerixID use?</summary>
+    <p>VerixID uses SHA-256 for file fingerprinting, cryptographic signatures for tamper-evident registration records, timestamps for time anchoring, and deterministic recomputation for verification. SHA-256 produces a 64-character hexadecimal fingerprint that uniquely represents the file's content.</p>
+  </details>
+
+  <details>
+    <summary>What happens during VerixID registration?</summary>
+    <p>During registration, the fingerprint is submitted to VerixID along with a timestamp. The system creates a registration record binding the fingerprint to that moment in time, and cryptographically signs the record so that any later modification would invalidate the signature.</p>
+  </details>
+
+  <details>
+    <summary>How long does verification take?</summary>
+    <p>Verification is deterministic and does not depend on trust in the operator. Once the fingerprint is recomputed from the original file and looked up, the registration record can be checked quickly. The time required depends primarily on the size of the file for hashing, not on any server-side processing.</p>
+  </details>
+
+  <details>
+    <summary>Can the same file be registered twice?</summary>
+    <p>The same file content produces the same SHA-256 fingerprint, so the first registration establishes the earliest point in time at which that fingerprint is known to VerixID. Subsequent registrations of the same fingerprint do not change the original registration timestamp.</p>
+  </details>
+
+  <details>
+    <summary>What happens if a file is modified?</summary>
+    <p>Any modification to a file changes its SHA-256 fingerprint. A modified file will not match the fingerprint associated with an existing registration, so verification will fail for that modified version. This is a property of the cryptographic hash function, not a policy choice.</p>
+  </details>
+
+  <details>
+    <summary>Is the file stored anywhere during the process?</summary>
+    <p>No. The file stays with the user. Only the fingerprint and registration metadata are stored. The zero-custody model means VerixID never has access to the file's content, and therefore cannot leak, retain, or be compelled to disclose it.</p>
+  </details>
+</section>
+
+    <h2>Next</h2>
+    <a href="/proof-of-origin/" class="cta secondary">What Proof of Origin means →</a>
+    <a href="https://verixid.com" class="cta">Register a file →</a>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="cols">
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="https://verixid.com">VerixID.com</a></li>
+          <li><a href="https://verixid.com/verify">Verify</a></li>
+          <li><a href="https://verixid.com/pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Developers</h4>
+        <ul>
+          <li><a href="https://github.com/verixid">GitHub</a></li>
+          <li><a href="/how-it-works/">How It Works</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>MCP</h4>
+        <ul>
+          <li><a href="/mcp/">MCP Server</a></li>
+          <li><a href="https://mcp.verixid.com">mcp.verixid.com</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="/proof-of-origin/">Proof of Origin</a></li>
+          <li><a href="/security/">Security</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="tagline">
+      VerixID - Cryptographic Proof of Digital File Origin and Integrity
+    </div>
+    <div class="copyright">
+        ©<span id="year">2026</span> VerixID. All rights reserved.
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var el = document.getElementById('year');
+      if (el) el.textContent = new Date().getFullYear();
+    })();
+  </script>
+</footer>
+
+</body>
+</html>
