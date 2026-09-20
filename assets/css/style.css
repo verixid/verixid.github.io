@@ -42,7 +42,7 @@ nav.top a { color: var(--fg-muted); text-decoration: none; font-size: 14px; }
 nav.top a:hover { color: var(--fg); }
 
 nav.top a.brand {
-  font-family: var(--font-brand);
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   font-size: 1.375rem;
   color: #1e3a8a;
