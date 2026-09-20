@@ -1,0 +1,31 @@
+# VerixID
+
+> VerixID is a cryptographic verification platform for digital file provenance. It establishes when a digital file was first registered using SHA-256 fingerprints, timestamps, and cryptographic signatures — without storing the file itself.
+
+VerixID provides Proof of Origin for digital files. The technical authority site is verixid.github.io; the commercial platform is verixid.com; the MCP server for AI agents is mcp.verixid.com.
+
+## Core Concepts
+
+- [Proof of Origin](https://verixid.github.io/proof-of-origin.html): What VerixID proves and what it does not prove.
+- [How It Works](https://verixid.github.io/how-it-works.html): The cryptographic flow from file to verifiable registration record.
+- [Cryptography](https://verixid.github.io/cryptography.html): SHA-256, Ed25519, timestamps, and signatures.
+- [Security](https://verixid.github.io/security.html): Zero-custody model and minimal attack surface.
+- [Privacy](https://verixid.github.io/privacy.html): What data is used, what is not, and why.
+
+## For AI Agents
+
+- [MCP Server](https://verixid.github.io/mcp.html): Verify digital file fingerprints via MCP. Server ID: com.verixid/verifier.
+- [MCP endpoint](https://mcp.verixid.com): Machine interface.
+
+## For Developers
+
+- [Developers](https://verixid.github.io/developers.html): Integration concepts and technical resources.
+- [GitHub](https://github.com/verixid): Source and evidence.
+
+## Product
+
+- [verixid.com](https://verixid.com): Submit, verify, COA, pricing.
+
+## Optional
+
+- [About](https://verixid.github.io/about.html): VerixID ecosystem overview.

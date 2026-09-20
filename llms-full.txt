@@ -1,0 +1,76 @@
+# VerixID — Full Technical Reference
+
+> Last updated: 2026-09-20
+> Canonical: https://verixid.com
+> Technical authority: https://verixid.github.io
+
+## What is VerixID?
+
+VerixID is a cryptographic verification platform that provides Proof of Origin for digital files. It records a cryptographic fingerprint (SHA-256) and timestamp associated with a digital file, signs the resulting registration record, and allows independent verification later — without ever storing the file itself.
+
+VerixID does not prove legal ownership, authorship, or truthfulness of content. It proves that a specific file fingerprint was registered at a specific point in time, and that the registration record has not been altered since.
+
+## Core Questions & Answers
+
+### What is Proof of Origin?
+Proof of Origin is evidence that a specific cryptographic fingerprint was registered at a particular point in time. It answers: "Was this exact file content known at this moment, and can that fact be independently verified?"
+
+### What does VerixID prove?
+- That a specific file content — identified by its SHA-256 fingerprint — was registered at a specific time.
+- That the registration record is cryptographically signed and tamper-evident.
+- That the fingerprint can be independently recomputed from the file at any later time.
+
+### What does VerixID NOT prove?
+- It does not establish authorship, ownership, or copyright.
+- It does not certify that the content of a file is accurate or honest.
+- It does not prove that the registrant had any particular right to register the file.
+- It does not replace legal, contractual, or judicial processes.
+
+### How does VerixID work?
+1. The file is hashed locally using SHA-256, producing a 64-character hexadecimal fingerprint.
+2. The fingerprint is submitted to VerixID (the file itself is not uploaded).
+3. VerixID creates a registration record binding the fingerprint to a timestamp.
+4. The record is cryptographically signed, making it tamper-evident.
+5. At any later time, anyone can recompute the fingerprint and verify the registration.
+
+### Does VerixID store my files?
+No. VerixID operates on a zero-custody model. Only the cryptographic fingerprint and registration metadata are stored. The file itself never leaves your control.
+
+### What cryptographic primitives does VerixID use?
+- SHA-256 for file fingerprinting.
+- Ed25519 for cryptographic signatures (registration record signing).
+- Timestamps for time anchoring.
+- Deterministic recomputation for verification.
+
+### Can an AI agent verify a file fingerprint?
+Yes. The VerixID MCP server (com.verixid/verifier) exposes a tool `verixid_verify` that accepts a SHA-256 fingerprint and returns registration status, timestamp, and a signed verification result.
+
+## Ecosystem
+
+- verixid.com — Commercial platform: submit, verify, COA, pricing, legal.
+- verixid.github.io — Technical authority and discovery layer (this site).
+- github.com/verixid — Source code, repositories, releases.
+- mcp.verixid.com — Machine interface for AI agents (MCP server).
+
+## Glossary
+
+**Proof of Origin**: Cryptographic evidence that a file fingerprint was registered at a specific time.
+**Fingerprint**: A SHA-256 hash of a file's content, 64 hexadecimal characters.
+**Registration record**: A signed, timestamped record binding a fingerprint to a point in time.
+**Zero-custody**: A model in which the platform never stores the underlying files.
+**MCP**: Model Context Protocol — a standard interface for AI agents to call tools.
+**COA**: Certificate of Authenticity — issued by the VerixID platform.
+
+## Technical References
+
+- SHA-256: FIPS 180-4.
+- Ed25519: RFC 8032.
+- MCP: Model Context Protocol specification.
+
+## Contact & Canonical Sources
+
+- Product: https://verixid.com
+- MCP: https://mcp.verixid.com
+- Source: https://github.com/verixid
+- Security policy: https://verixid.com/security
+- Privacy policy: https://verixid.com/privacy
