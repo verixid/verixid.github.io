@@ -29,3 +29,7 @@ VerixID provides Proof of Origin for digital files. The technical authority site
 ## Optional
 
 - [About](https://verixid.github.io/about.html): VerixID ecosystem overview.
+
+## Full Context
+
+- [llms-full.txt](https://verixid.github.io/llms-full.txt): Complete technical reference for LLMs with large context windows.
