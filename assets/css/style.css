@@ -391,3 +391,11 @@ a.dotted-link:hover {
   line-height: 1.65;
   margin-bottom: 0;
 }
+
+.explore-grid a {
+  text-decoration: none;
+}
+
+.explore-grid a:hover {
+  opacity: 0.8;                       /* efek hover */
+}
